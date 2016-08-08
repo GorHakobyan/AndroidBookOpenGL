@@ -1,5 +1,10 @@
 #version 120
 
+//     Uniforms are implicitly constant, within the shader.
+//     Attempting to change them with shader code will result in a compiler error. Similarly, you cannot
+//     pass a uniform as an out​ or inout​ parameter to a function.
+//     Uniforms are intended to be set by the user.
+
 //     We’ve added a new uniform definition, u_Matrix, and we’ve defined it as a mat4,
 //     meaning that this uniform will represent a 4 x 4 matrix.
 //     Our matrix to transform our positions
