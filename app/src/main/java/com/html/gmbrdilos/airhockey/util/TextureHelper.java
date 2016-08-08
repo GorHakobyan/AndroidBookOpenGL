@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
+import android.opengl.GLUtils;
 import android.util.Log;
+import android.view.TextureView;
 
 public class TextureHelper {
 
@@ -73,5 +75,28 @@ public class TextureHelper {
                 GLES20.GL_TEXTURE_MAG_FILTER, // GL_TEXTURE_MAG_FILTER refers to magnification
                 GLES20.GL_LINEAR // tells OpenGL to use bilinear filtering
         );
+
+//        We can now load the bitmap data into OpenGL with an easy call to GLUtils.texImage2D().
+//        This call tells OpenGL to read in the bitmap data defined by bitmap and copy
+//        it over into the texture object that is currently bound.
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+
+//        Now that the data’s been loaded into OpenGL, we no longer need to keep the
+//        Android bitmap around. Under normal circumstances, it might take a few
+//        garbage collection cycles for Dalvik to release this bitmap data, so we should
+//        call recycle() on the bitmap object to release the data immediately:
+        bitmap.recycle();
+
+//        Generating mipmaps is also a cinch. We can tell OpenGL to generate all of
+//        the necessary levels with a quick call to glGenerateMipmap():
+        GLES20.glGenerateMipmap(GLES20.GL_TEXTURE_2D);
+
+//        Now that we’ve finished loading the texture, a good practice is to then unbind
+//        from the texture so that we don’t accidentally make further changes to this
+//        texture with other texture calls.
+//        Passing 0 to glBindTexture() unbinds from the current texture.
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+
+        return textureObjectIds[0];
     }
 }
