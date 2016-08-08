@@ -157,4 +157,24 @@ public class ShaderHelper {
         Log.v(TAG, "Results of validating program: " + validateStatus[0] + "\nLog:" + GLES20.glGetProgramInfoLog(programObjectId));
         return validateStatus[0] != 0;
     }
+
+//    This helper function will compile the shaders defined by vertexShaderSource and
+//    fragmentShaderSource and link them together into a program. If logging is turned
+//    on, it will also validate the program. We’ll use this helper function to build
+//    up our base class.
+    public static int buildProgram(String vertexShaderSource, String fragmentShaderSource) {
+
+        int program;
+//     Compile the shaders.
+        int vertexShader = compileVertexShader(vertexShaderSource);
+        int fragmentShader = compileFragmentShader(fragmentShaderSource);
+//     Link them into a shader program.
+        program = linkProgram(vertexShader, fragmentShader);
+
+        if (LoggerConfig.ON) {
+            validateProgram(program);
+        }
+
+        return program;
+    }
 }
