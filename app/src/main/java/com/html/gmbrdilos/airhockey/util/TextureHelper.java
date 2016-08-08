@@ -38,6 +38,7 @@ public class TextureHelper {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;
 
+//        Read in the resource
 //        We then call BitmapFactory.decodeResource() to do the actual decode, passing in
 //        the Android context, resource ID, and the decoding options that we’ve just
 //        defined. This call will decode the image into bitmap or will return null if it failed.
@@ -54,6 +55,7 @@ public class TextureHelper {
             return 0;
         }
 
+//        Bind to the texture in OpenGL.
 //        Before we can do anything else with our newly generated texture object, we
 //        need to tell OpenGL that future texture calls should be applied to this texture
 //        object. We do that with a call to glBindTexture():
@@ -63,6 +65,7 @@ public class TextureHelper {
                 textureObjectIds[0] // and the second parameter tells OpenGL which texture object ID to bind to
         );
 
+//        Set filtering: a default must be set, or the texture will be black.
 //        We set each filter with a call to glTexParameteri()
         GLES20.glTexParameteri(
                 GLES20.GL_TEXTURE_2D,
@@ -76,6 +79,7 @@ public class TextureHelper {
                 GLES20.GL_LINEAR // tells OpenGL to use bilinear filtering
         );
 
+//        Load the bitmap into the bound texture.
 //        We can now load the bitmap data into OpenGL with an easy call to GLUtils.texImage2D().
 //        This call tells OpenGL to read in the bitmap data defined by bitmap and copy
 //        it over into the texture object that is currently bound.
