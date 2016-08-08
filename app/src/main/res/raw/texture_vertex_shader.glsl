@@ -3,6 +3,11 @@
 uniform mat4 u_Matrix;
 
 attribute vec4 a_Position;
+
+//     a_TextureCoordinates. It’s defined as a vec2 because
+//     there are two components: the S coordinate and the T coordinate. We send
+//     these coordinates on to the fragment shader as an interpolated varying called
+//     v_TextureCoordinates
 attribute vec2 a_TextureCoordinates;
 
 varying vec2 v_TextureCoordinates;
