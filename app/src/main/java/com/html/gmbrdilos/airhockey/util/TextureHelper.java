@@ -58,7 +58,7 @@ public class TextureHelper {
 
         GLES20.glBindTexture(
                 GLES20.GL_TEXTURE_2D, //  tells OpenGL that this should be treated as a two-dimensional texture
-                textureObjectIds[0]
+                textureObjectIds[0] // and the second parameter tells OpenGL which texture object ID to bind to
         );
     }
 }
