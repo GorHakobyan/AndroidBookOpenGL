@@ -65,13 +65,13 @@ public class TextureHelper {
         GLES20.glTexParameteri(
                 GLES20.GL_TEXTURE_2D,
                 GLES20.GL_TEXTURE_MIN_FILTER, //  GL_TEXTURE_MIN_FILTER refers to minification
-                GLES20.GL_LINEAR_MIPMAP_LINEAR
+                GLES20.GL_LINEAR_MIPMAP_LINEAR // tells OpenGL to use trilinear filtering
         );
 
         GLES20.glTexParameteri(
                 GLES20.GL_TEXTURE_2D,
                 GLES20.GL_TEXTURE_MAG_FILTER, // GL_TEXTURE_MAG_FILTER refers to magnification
-                GLES20.GL_LINEAR
+                GLES20.GL_LINEAR // tells OpenGL to use bilinear filtering
         );
     }
 }
