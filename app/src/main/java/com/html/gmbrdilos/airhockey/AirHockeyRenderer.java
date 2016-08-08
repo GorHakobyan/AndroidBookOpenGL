@@ -329,7 +329,15 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer{
 //        along the z-axis. When we multiply our air hockey table coordinates with this
 //        matrix, they will end up getting moved by 2 units along the negative z-axis.
         Matrix.setIdentityM(modelMatrix, 0);
-        Matrix.translateM(modelMatrix, 0, 0f, 0f, -2f);
+        Matrix.translateM(modelMatrix, 0, 0f, 0f, -2.5f);
+
+        Matrix.rotateM(modelMatrix, 0,
+                -60f,    // Rotate with this angle
+                2f,      // x
+                1f,      // y
+                2f       // z
+        );
+
 
 //        Whenever we multiply two matrices, we need a temporary area to store the
 //        result. If we try to write the result directly, the results are undefined!
