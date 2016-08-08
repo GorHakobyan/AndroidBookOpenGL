@@ -333,9 +333,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer{
 
         Matrix.rotateM(modelMatrix, 0,
                 -60f,    // Rotate with this angle
-                2f,      // x
-                1f,      // y
-                2f       // z
+                1f,      // x
+                0f,      // y
+                0f       // z
         );
 
 
