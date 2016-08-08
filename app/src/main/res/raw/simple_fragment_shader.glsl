@@ -1,3 +1,4 @@
+#version 120
 
 precision mediump float; //Defines the default precision for all floating point data types in the fragment shader
 

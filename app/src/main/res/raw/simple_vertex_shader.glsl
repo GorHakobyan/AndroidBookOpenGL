@@ -1,3 +1,4 @@
+#version 120
 
 //     We’ve added a new uniform definition, u_Matrix, and we’ve defined it as a mat4,
 //     meaning that this uniform will represent a 4 x 4 matrix.
