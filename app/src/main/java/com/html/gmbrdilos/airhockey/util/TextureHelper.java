@@ -60,5 +60,18 @@ public class TextureHelper {
                 GLES20.GL_TEXTURE_2D, //  tells OpenGL that this should be treated as a two-dimensional texture
                 textureObjectIds[0] // and the second parameter tells OpenGL which texture object ID to bind to
         );
+
+//        We set each filter with a call to glTexParameteri()
+        GLES20.glTexParameteri(
+                GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MIN_FILTER, //  GL_TEXTURE_MIN_FILTER refers to minification
+                GLES20.GL_LINEAR_MIPMAP_LINEAR
+        );
+
+        GLES20.glTexParameteri(
+                GLES20.GL_TEXTURE_2D,
+                GLES20.GL_TEXTURE_MAG_FILTER, // GL_TEXTURE_MAG_FILTER refers to magnification
+                GLES20.GL_LINEAR
+        );
     }
 }
