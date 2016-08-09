@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
-import android.view.TextureView;
 
 public class TextureHelper {
 
