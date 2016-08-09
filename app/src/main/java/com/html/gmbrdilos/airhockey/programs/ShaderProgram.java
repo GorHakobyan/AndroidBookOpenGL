@@ -16,6 +16,7 @@ public class ShaderProgram {
     protected static final String A_TEXTURE_COORDINATES = "a_TextureCoordinates";
 //     Shader program
     protected final int program;
+
     protected ShaderProgram(Context context, int vertexShaderResourceId, int fragmentShaderResourceId) {
 //     Compile the shaders and link the program.
         program = ShaderHelper.buildProgram(

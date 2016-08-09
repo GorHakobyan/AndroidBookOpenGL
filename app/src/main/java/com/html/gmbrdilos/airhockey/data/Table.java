@@ -3,6 +3,8 @@ package com.html.gmbrdilos.airhockey.data;
 import android.opengl.GLES20;
 import android.view.TextureView;
 
+import com.html.gmbrdilos.airhockey.programs.TextureShaderProgram;
+
 //     this class will store the position
 //     data for our table, and we’ll also add texture coordinates to apply the texture
 //     to the table.
