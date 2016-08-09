@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             glSurfaceView.setEGLContextClientVersion(2);
 
             // Assign our renderer.
-            glSurfaceView.setRenderer(new AirHockeyRenderer(this)); // An Activity is an Android context, so we pass in a reference to this.
+            glSurfaceView.setRenderer(new AirHockeyRendererBeforeSeperatingClasses(this)); // An Activity is an Android context, so we pass in a reference to this.
             rendererSet = true;
         } else {
             /*
