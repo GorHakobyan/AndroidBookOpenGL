@@ -1,4 +1,3 @@
-#version 120
 
 //     To draw the texture on an object, OpenGL will call the fragment shader for
 //     each fragment, and each call will receive the texture coordinates in v_TextureCoordinates.

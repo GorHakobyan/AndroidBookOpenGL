@@ -1,4 +1,3 @@
-#version 120
 
 //     Uniforms are implicitly constant, within the shader.
 //     Attempting to change them with shader code will result in a compiler error. Similarly, you cannot
