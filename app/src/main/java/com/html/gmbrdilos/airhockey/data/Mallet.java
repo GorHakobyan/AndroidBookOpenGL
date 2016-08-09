@@ -2,6 +2,8 @@ package com.html.gmbrdilos.airhockey.data;
 
 import android.opengl.GLES20;
 
+import com.html.gmbrdilos.airhockey.programs.ColorShaderProgram;
+
 public class Mallet {
 
     private static final int POSITION_COMPONENT_COUNT = 2;

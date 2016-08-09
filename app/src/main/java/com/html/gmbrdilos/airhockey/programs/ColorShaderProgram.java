@@ -25,4 +25,17 @@ public class ColorShaderProgram extends ShaderProgram {
         aPositionLocation = GLES20.glGetAttribLocation(program, A_POSITION);
         aColorLocation = GLES20.glGetAttribLocation(program, A_COLOR);
     }
+
+    public void setUniforms(float[] matrix) {
+//     Pass the matrix into the shader program.
+        GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, matrix, 0);
+    }
+
+    public int getPositionAttributeLocation() {
+        return aPositionLocation;
+    }
+
+    public int getColorAttributeLocation() {
+        return aColorLocation;
+    }
 }
