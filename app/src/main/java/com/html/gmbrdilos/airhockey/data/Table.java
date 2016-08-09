@@ -1,7 +1,6 @@
 package com.html.gmbrdilos.airhockey.data;
 
 import android.opengl.GLES20;
-import android.view.TextureView;
 
 import com.html.gmbrdilos.airhockey.programs.TextureShaderProgram;
 
