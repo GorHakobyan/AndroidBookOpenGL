@@ -358,7 +358,23 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //        Clear the rendering surface.
         gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, projectionMatrix, 0);
+        GLES20.glUniformMatrix4fv(
+
+//               Location
+                uMatrixLocation,
+
+//               Count
+                1,
+
+//               Transpose
+                false,
+
+//               Value
+                projectionMatrix,
+
+//               Offset
+                0
+        );
 
 //        First we update the value of u_Color in our shader code by calling glUniform4f().
 //        Unlike attributes, uniforms don’t have default components, so if a uniform

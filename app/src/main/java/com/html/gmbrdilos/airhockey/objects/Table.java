@@ -2,7 +2,7 @@ package com.html.gmbrdilos.airhockey.objects;
 
 import android.opengl.GLES20;
 
-import com.html.gmbrdilos.airhockey.data.Constants;
+import com.html.gmbrdilos.airhockey.Constants;
 import com.html.gmbrdilos.airhockey.data.VertexArray;
 import com.html.gmbrdilos.airhockey.programs.TextureShaderProgram;
 
@@ -48,8 +48,7 @@ public class Table {
     public void bindData(TextureShaderProgram textureProgram) {
 
 //        setVertexAttribPointer() called for each attribute, getting the location of each attribute from the shader program.
-//        This will bind the position
-//        data to the shader attribute referenced by getPositionAttributeLocation() and bind
+//        This will bind the position data to the shader attribute referenced by getPositionAttributeLocation() and bind
 //        the texture coordinate data to the shader attribute referenced by getTextureCoordinatesAttributeLocation().
 
         vertexArray.setVertexAttribPointer(

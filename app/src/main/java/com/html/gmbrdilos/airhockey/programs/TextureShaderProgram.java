@@ -34,7 +34,23 @@ public class TextureShaderProgram extends ShaderProgram {
 
     public void setUniforms(float[] matrix, int textureId) {
 //        Pass the matrix into the shader program.
-        GLES20.glUniformMatrix4fv(uMatrixLocation, 1, false, matrix, 0);
+        GLES20.glUniformMatrix4fv(
+
+//               Location
+                uMatrixLocation,
+
+//               Count
+                1,
+
+//               Transpose
+                false,
+
+//               Value
+                matrix,
+
+//               Offset
+                0
+        );
 
 //        When we draw using textures
 //        in OpenGL, we don’t pass the texture directly in to the shader. Instead, we

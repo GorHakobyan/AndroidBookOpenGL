@@ -1,4 +1,4 @@
-package com.html.gmbrdilos.airhockey.data;
+package com.html.gmbrdilos.airhockey;
 
 public class Constants {
 

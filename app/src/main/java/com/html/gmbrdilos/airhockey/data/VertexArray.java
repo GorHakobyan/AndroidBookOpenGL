@@ -3,6 +3,8 @@ package com.html.gmbrdilos.airhockey.data;
 
 import android.opengl.GLES20;
 
+import com.html.gmbrdilos.airhockey.Constants;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;

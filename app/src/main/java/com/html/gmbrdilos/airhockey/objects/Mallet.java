@@ -2,7 +2,7 @@ package com.html.gmbrdilos.airhockey.objects;
 
 import android.opengl.GLES20;
 
-import com.html.gmbrdilos.airhockey.data.Constants;
+import com.html.gmbrdilos.airhockey.Constants;
 import com.html.gmbrdilos.airhockey.data.VertexArray;
 import com.html.gmbrdilos.airhockey.programs.ColorShaderProgram;
 
@@ -30,6 +30,7 @@ public class Mallet {
                 colorProgram.getPositionAttributeLocation(),
                 POSITION_COMPONENT_COUNT,
                 STRIDE);
+
         vertexArray.setVertexAttribPointer(
                 POSITION_COMPONENT_COUNT,
                 colorProgram.getColorAttributeLocation(),
