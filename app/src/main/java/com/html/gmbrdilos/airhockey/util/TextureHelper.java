@@ -10,6 +10,7 @@ import android.util.Log;
 public class TextureHelper {
 
     private static final String TAG = "TextureHelper";
+
 //    This method will take in an Android context and a resource ID and will return
 //    the ID of the loaded OpenGL texture.
 
