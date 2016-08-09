@@ -138,8 +138,10 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 //        Draw the table.
 //        First we call textureProgram.useProgram() to tell OpenGL to use this program.
         textureProgram.useProgram();
+
 //        Then we pass in the uniforms with a call to textureProgram.setUniforms()
         textureProgram.setUniforms(projectionMatrix, texture);
+
 //        Bind the vertex array data and our shader program with a call to table.bindData().
         table.bindData(textureProgram);
 //        We can then finally draw the table with a call to table.draw()

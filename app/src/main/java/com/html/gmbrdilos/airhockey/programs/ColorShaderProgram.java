@@ -9,8 +9,8 @@ public class ColorShaderProgram extends ShaderProgram {
 
 //     Uniform locations
     private final int uMatrixLocation;
-//     Attribute locations
 
+//     Attribute locations
     private final int aPositionLocation;
     private final int aColorLocation;
 

@@ -15,6 +15,7 @@ public class TextureShaderProgram extends ShaderProgram {
     private final int aPositionLocation;
     private final int aTextureCoordinatesLocation;
 
+//     Constructor to initialize the shader program
     public TextureShaderProgram(Context context) {
 
 //        This constructor will call the superclass with our selected resources, and the
