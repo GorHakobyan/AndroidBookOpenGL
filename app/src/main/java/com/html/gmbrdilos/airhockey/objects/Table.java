@@ -1,7 +1,9 @@
-package com.html.gmbrdilos.airhockey.data;
+package com.html.gmbrdilos.airhockey.objects;
 
 import android.opengl.GLES20;
 
+import com.html.gmbrdilos.airhockey.data.Constants;
+import com.html.gmbrdilos.airhockey.data.VertexArray;
 import com.html.gmbrdilos.airhockey.programs.TextureShaderProgram;
 
 //     this class will store the position
@@ -17,6 +19,16 @@ public class Table {
 //     Order of coordinates: X, Y, S, T
 
 //     Triangle Fan
+
+//     The component T runs in opposite direction of component
+//     max of Y is 0.8, min of Y is -0.8
+//     max of T is 0.9, min of T is 0.1
+
+//     We also used T coordinates of 0.1f and 0.9f. Why? Well, our table is 1 unit
+//     wide and 1.6 units tall. Our texture image is 512 x 1024 in pixels, so if the
+//     width corresponds to 1 unit, the texture is actually 2 units tall. To avoid
+//     squashing the texture, we use the range 0.1 to 0.9 instead of 0.0 to 1.0 to
+//     clip the edges and just draw the center portion.
             0f, 0f,          0.5f, 0.5f,
             -0.5f, -0.8f,    0f, 0.9f,
             0.5f, -0.8f,     1f, 0.9f,

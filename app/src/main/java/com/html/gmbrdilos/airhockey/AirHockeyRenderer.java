@@ -5,8 +5,8 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
-import com.html.gmbrdilos.airhockey.data.Mallet;
-import com.html.gmbrdilos.airhockey.data.Table;
+import com.html.gmbrdilos.airhockey.objects.Mallet;
+import com.html.gmbrdilos.airhockey.objects.Table;
 import com.html.gmbrdilos.airhockey.programs.ColorShaderProgram;
 import com.html.gmbrdilos.airhockey.programs.TextureShaderProgram;
 import com.html.gmbrdilos.airhockey.util.MatrixHelper;
