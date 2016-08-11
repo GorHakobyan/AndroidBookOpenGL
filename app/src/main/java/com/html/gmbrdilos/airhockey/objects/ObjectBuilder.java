@@ -14,6 +14,8 @@ package com.html.gmbrdilos.airhockey.objects;
 //              flat on the x-z plane. In other words, the top of the object will point straight
 //              up.
 
+import android.opengl.GLES20;
+
 import com.html.gmbrdilos.airhockey.util.Geometry;
 
 import java.util.ArrayList;
@@ -46,6 +48,19 @@ public class ObjectBuilder {
         void draw();
     }
 
+//    This is just a holder class so that we can return both the vertex data and the
+//    draw list in a single object.
+    static class GeneratedData {
+
+        final float[] vertexData;
+        final List<DrawCommand> drawList;
+
+        GeneratedData(float[] vertexData, List<DrawCommand> drawList) {
+            this.vertexData = vertexData;
+            this.drawList = drawList;
+        }
+    }
+
 //    A method to calculate the size of a cylinder top in vertices:
 //    A cylinder top is a circle built out of a triangle fan; it has one vertex in the
 //    center, one vertex for each point around the circle, and the first vertex around
@@ -63,6 +78,9 @@ public class ObjectBuilder {
     }
 
 //    A method to generate Puck
+//    This method creates a new ObjectBuilder with the right array size to hold all of
+//    the data for the puck. It also creates a display list so that we can draw
+//    the puck later on.
     static GeneratedData createPuck(Geometry.Cylinder puck, int numPoints) {
 
 //        How many vertices we need to represent the puck.
@@ -83,14 +101,24 @@ public class ObjectBuilder {
 
                 puck.radius);
 
+//        appendCircle() and appendOpenCylinder() to generate
+//        the top and sides of the puck. Each method adds its data to vertexData and
+//        a draw command to drawList.
         builder.appendCircle(puckTop, numPoints);
 
         builder.appendOpenCylinder(puck, numPoints);
 
+//        We call build() to return the generated data
         return builder.build();
     }
 
     private void appendCircle(Geometry.Circle circle, int numPoints) {
+
+//        Since we’re only using one array for the object, we need to tell OpenGL the
+//        right vertex offsets for each draw command. We calculate the offset and length
+//        and store them into startVertex and numVertices.
+        final int startVertex = offset / FLOATS_PER_VERTEX;
+        final int numVertices = sizeOfCircleInVertices(numPoints);
 
 //        Center point of fan
         vertexData[offset++] = circle.center.x;
@@ -111,5 +139,52 @@ public class ObjectBuilder {
 
             vertexData[offset++] = circle.center.z + circle.radius * (float) Math.sin(angleInRadians);
         }
+
+//        With this code, we create a new inner class that calls glDrawArrays() and we add
+//        the inner class to our draw list. To draw the puck later, we just have to execute
+//        each draw() method in the list.
+        drawList.add(new DrawCommand() {
+            @Override
+            public void draw() {
+                GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, startVertex, numVertices);
+            }
+        });
+    }
+
+    private void appendOpenCylinder(Geometry.Cylinder cylinder, int numPoints) {
+
+        final int startVertex = offset / FLOATS_PER_VERTEX;
+        final int numVertices = sizeOfOpenCylinderInVertices(numPoints);
+
+        final float yStart = cylinder.center.y - (cylinder.height / 2f);
+        final float yEnd = cylinder.center.y + (cylinder.height / 2f);
+
+        for (int i = 0; i <= numPoints; i++) {
+
+            float angleInRadians = ((float) i / (float) numPoints) * ((float) Math.PI * 2f);
+
+            float xPosition = cylinder.center.x + cylinder.radius * (float) Math.cos(angleInRadians);
+            float zPosition = cylinder.center.z + cylinder.radius * (float) Math.sin(angleInRadians);
+
+            vertexData[offset++] = xPosition;
+            vertexData[offset++] = yStart;
+            vertexData[offset++] = zPosition;
+
+            vertexData[offset++] = xPosition;
+            vertexData[offset++] = yEnd;
+            vertexData[offset++] = zPosition;
+        }
+
+        drawList.add(new DrawCommand() {
+            @Override
+            public void draw() {
+                GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, startVertex, numVertices);
+            }
+        });
+    }
+
+//     We’ll use this to return the generated data inside of a GeneratedData object.
+    private GeneratedData build() {
+        return new GeneratedData(vertexData, drawList);
     }
 }
