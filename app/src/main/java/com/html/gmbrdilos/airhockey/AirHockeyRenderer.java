@@ -29,7 +29,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     private ColorShaderProgram colorProgram;
 
     private int texture;
-    private int texture2;
+
+//        For 2nd texture (BLENDING EXERCISE)
+//    private int texture2;
 
     public AirHockeyRenderer(Context context) {
         this.context = context;
@@ -49,7 +51,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         colorProgram = new ColorShaderProgram(context);
 
         texture = TextureHelper.loadTexture(context, R.drawable.air_hockey_surface);
-        texture2 = TextureHelper.loadTexture(context, R.drawable.texture);
+
+//        For 2nd texture (BLENDING EXERCISE)
+//        texture2 = TextureHelper.loadTexture(context, R.drawable.texture);
     }
 
     @Override
