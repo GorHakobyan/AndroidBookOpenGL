@@ -29,6 +29,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     private ColorShaderProgram colorProgram;
 
     private int texture;
+    private int texture2;
 
     public AirHockeyRenderer(Context context) {
         this.context = context;
@@ -48,6 +49,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         colorProgram = new ColorShaderProgram(context);
 
         texture = TextureHelper.loadTexture(context, R.drawable.air_hockey_surface);
+        texture2 = TextureHelper.loadTexture(context, R.drawable.texture);
     }
 
     @Override
@@ -143,6 +145,49 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         textureProgram.setUniforms(projectionMatrix, texture);
 
 //        Bind the vertex array data and our shader program with a call to table.bindData().
+        table.bindData(textureProgram);
+
+        GLES20.glUniformMatrix4fv(
+
+//               Location
+                textureProgram.getuMatrixLocation(),
+
+//               Count
+                1,
+
+//               Transpose
+                false,
+
+//               Value
+                projectionMatrix,
+
+//               Offset
+                0
+        );
+
+//        When we draw using textures
+//        in OpenGL, we don’t pass the texture directly in to the shader. Instead, we
+//        use a texture unit to hold the texture. We do this because a GPU can only
+//        draw so many textures at the same time. It uses these texture units to represent
+//        the active textures currently being drawn.
+//        We can swap textures in and out of texture units if we need to switch textures,
+//        though this may slow down rendering if we do it too often. We can also use
+//        several texture units to draw more than one texture at the same time.
+//        We start out this part by setting the active texture unit to texture unit 0 with a
+//        call to glActiveTexture(), and then we bind our texture to this unit with a call
+//        to glBindTexture(). We then pass in the selected texture unit to u_TextureUnit in the
+//        fragment shader by calling glUniform1i(uTextureUnitLocation, 0).
+
+//        Set the active texture unit to texture unit 1.
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
+
+//        Bind the texture to this unit.
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture2);
+
+//        Tell the texture uniform sampler to use this texture in the shader by
+//        telling it to read from texture unit 1.
+        GLES20.glUniform1i(textureProgram.getuTextureUnitLocation(), 1);
+
         table.bindData(textureProgram);
 //        We can then finally draw the table with a call to table.draw()
         table.draw();

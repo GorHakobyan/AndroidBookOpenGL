@@ -12,6 +12,8 @@ precision mediump float;
 //     refers to an array of two-dimensional texture data.
 uniform sampler2D u_TextureUnit;
 
+//     For 2nd texture (BLENDING EXERCISE)
+uniform sampler2D u_TextureUnit1;
 //     OpenGL will call the fragment shader for each fragment, and each
 //     call will receive the texture coordinates in v_TextureCoordinates.
 varying vec2 v_TextureCoordinates;
@@ -22,5 +24,10 @@ void main()
 //     the shader function texture2D(), which will read in the color value for the texture
 //     at that particular coordinate. We then set the fragment to that color by
 //     assigning the result to gl_FragColor.
-    gl_FragColor = texture2D(u_TextureUnit, v_TextureCoordinates);
+//    gl_FragColor = texture2D(u_TextureUnit, v_TextureCoordinates);
+
+//       For 2nd texture (BLENDING EXERCISE)
+    vec4 vColor_0 = texture2D(u_TextureUnit, v_TextureCoordinates);
+    vec4 vColor_1 = texture2D(u_TextureUnit1, v_TextureCoordinates);
+    gl_FragColor = vColor_0 - vColor_1;
 }

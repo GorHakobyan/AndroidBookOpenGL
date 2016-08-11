@@ -11,6 +11,9 @@ public class TextureShaderProgram extends ShaderProgram {
     private final int uMatrixLocation;
     private final int uTextureUnitLocation;
 
+//    For 2nd texture (BLENDING EXERCISE)
+    private final int uTextureUnitLocation1;
+
 //     Attribute locations
     private final int aPositionLocation;
     private final int aTextureCoordinatesLocation;
@@ -27,6 +30,9 @@ public class TextureShaderProgram extends ShaderProgram {
 //        Retrieve uniform locations for the shader program.
         uMatrixLocation = GLES20.glGetUniformLocation(program, U_MATRIX);
         uTextureUnitLocation = GLES20.glGetUniformLocation(program, U_TEXTURE_UNIT);
+
+//        For 2nd texture (BLENDING EXERCISE)
+        uTextureUnitLocation1 = GLES20.glGetUniformLocation(program, "u_TextureUnit1");
 
 //        Retrieve attribute locations for the shader program.
         aPositionLocation = GLES20.glGetAttribLocation(program, A_POSITION);
@@ -83,5 +89,14 @@ public class TextureShaderProgram extends ShaderProgram {
 
     public int getTextureCoordinatesAttributeLocation() {
         return aTextureCoordinatesLocation;
+    }
+
+//     For 2nd texture (BLENDING EXERCISE)
+    public int getuMatrixLocation() {
+        return uMatrixLocation;
+    }
+
+    public int getuTextureUnitLocation(){
+        return uTextureUnitLocation1;
     }
 }
