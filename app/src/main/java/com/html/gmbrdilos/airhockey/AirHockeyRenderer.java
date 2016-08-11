@@ -291,7 +291,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
 //        Draw the puck.
         positionObjectInScene(0f, puck.height / 2f, 0f);
-        colorProgram.setUniforms(modelViewProjectionMatrix, 0.8f, 0.8f, 1f);
+        colorProgram.setUniforms(modelViewProjectionMatrix, 0f, 0f, 0f);
         puck.bindData(colorProgram);
         puck.draw();
     }
