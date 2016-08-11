@@ -24,10 +24,10 @@ void main()
 //     the shader function texture2D(), which will read in the color value for the texture
 //     at that particular coordinate. We then set the fragment to that color by
 //     assigning the result to gl_FragColor.
-//    gl_FragColor = texture2D(u_TextureUnit, v_TextureCoordinates);
+    gl_FragColor = texture2D(u_TextureUnit, v_TextureCoordinates);
 
 //       For 2nd texture (BLENDING EXERCISE)
-    vec4 vColor_0 = texture2D(u_TextureUnit, v_TextureCoordinates);
-    vec4 vColor_1 = texture2D(u_TextureUnit1, v_TextureCoordinates);
-    gl_FragColor = vColor_0 - vColor_1;
+//    vec4 vColor_0 = texture2D(u_TextureUnit, v_TextureCoordinates);
+//    vec4 vColor_1 = texture2D(u_TextureUnit1, v_TextureCoordinates);
+//    gl_FragColor = vColor_0 - vColor_1;
 }

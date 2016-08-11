@@ -147,24 +147,25 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 //        Bind the vertex array data and our shader program with a call to table.bindData().
         table.bindData(textureProgram);
 
-        GLES20.glUniformMatrix4fv(
-
+//        For 2nd texture (BLENDING EXERCISE)
+//        GLES20.glUniformMatrix4fv(
+//
 //               Location
-                textureProgram.getuMatrixLocation(),
-
+//                textureProgram.getuMatrixLocation(),
+//
 //               Count
-                1,
-
+//                1,
+//
 //               Transpose
-                false,
-
+//                false,
+//
 //               Value
-                projectionMatrix,
-
+//                projectionMatrix,
+//
 //               Offset
-                0
-        );
-
+//                0
+//        );
+//
 //        When we draw using textures
 //        in OpenGL, we don’t pass the texture directly in to the shader. Instead, we
 //        use a texture unit to hold the texture. We do this because a GPU can only
@@ -177,18 +178,23 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 //        call to glActiveTexture(), and then we bind our texture to this unit with a call
 //        to glBindTexture(). We then pass in the selected texture unit to u_TextureUnit in the
 //        fragment shader by calling glUniform1i(uTextureUnitLocation, 0).
-
+//
+//        For 2nd texture (BLENDING EXERCISE)
 //        Set the active texture unit to texture unit 1.
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
-
+//        GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
+//
+//        For 2nd texture (BLENDING EXERCISE)
 //        Bind the texture to this unit.
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture2);
-
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture2);
+//
+//        For 2nd texture (BLENDING EXERCISE)
 //        Tell the texture uniform sampler to use this texture in the shader by
 //        telling it to read from texture unit 1.
-        GLES20.glUniform1i(textureProgram.getuTextureUnitLocation(), 1);
+//        GLES20.glUniform1i(textureProgram.getuTextureUnitLocation(), 1);
+//
+//        For 2nd texture (BLENDING EXERCISE)
+//        table.bindData(textureProgram);
 
-        table.bindData(textureProgram);
 //        We can then finally draw the table with a call to table.draw()
         table.draw();
 
