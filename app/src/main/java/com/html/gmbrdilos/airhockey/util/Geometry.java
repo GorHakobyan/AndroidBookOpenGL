@@ -26,6 +26,7 @@ public class Geometry {
             this.center = center;
             this.radius = radius;
         }
+
         public Circle scale(float scale) {
             return new Circle(center, radius * scale);
         }
