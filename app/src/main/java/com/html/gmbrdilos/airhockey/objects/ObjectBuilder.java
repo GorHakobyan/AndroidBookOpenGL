@@ -126,25 +126,17 @@ public class ObjectBuilder {
         float handleRadius = radius / 3f;
 
 //        Base
-        Geometry.Circle baseCircle = new Geometry.Circle(
-                center.translateY(-baseHeight),
-                radius);
+        Geometry.Circle baseCircle = new Geometry.Circle(center.translateY(-baseHeight), radius);
 
-        Geometry.Cylinder baseCylinder = new Geometry.Cylinder(
-                baseCircle.center.translateY(-baseHeight / 2f),
-                radius, baseHeight);
+        Geometry.Cylinder baseCylinder = new Geometry.Cylinder(baseCircle.center.translateY(-baseHeight / 2f), radius, baseHeight);
 
         builder.appendCircle(baseCircle, numPoints);
         builder.appendOpenCylinder(baseCylinder, numPoints);
 
 //        Handle
-        Geometry.Circle handleCircle = new Geometry.Circle(
-                center.translateY(height * 0.5f),
-                handleRadius);
+        Geometry.Circle handleCircle = new Geometry.Circle(center.translateY(height * 0.5f), handleRadius);
 
-        Geometry.Cylinder handleCylinder = new Geometry.Cylinder(
-                handleCircle.center.translateY(-handleHeight / 2f),
-                handleRadius, handleHeight);
+        Geometry.Cylinder handleCylinder = new Geometry.Cylinder(handleCircle.center.translateY(-handleHeight / 2f), handleRadius, handleHeight);
 
         builder.appendCircle(handleCircle, numPoints);
         builder.appendOpenCylinder(handleCylinder, numPoints);

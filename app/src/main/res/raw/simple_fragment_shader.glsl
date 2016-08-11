@@ -9,10 +9,14 @@ precision mediump float; //    Defines the default precision for all floating po
 //     important when it comes to a vertex’s position, the OpenGL designers decided
 //     to set vertex shaders to the highest setting, highp, by default.
 
-varying vec4 v_Color;
+//varying vec4 v_Color;
+
+uniform vec4 u_Color;
 
 void main()
 {
 //     blended_value = (vertex_0_value * (100% – distance_ratio)) + (vertex_1_value * distance_ratio)
-    gl_FragColor = v_Color;
+//    gl_FragColor = v_Color;
+
+      gl_FragColor = u_Color;
 }

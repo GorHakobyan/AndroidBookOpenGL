@@ -14,7 +14,8 @@ uniform mat4 u_Matrix;
 //     attributes into our shader
 
 attribute vec4 a_Position;
-attribute vec4 a_Color;
+
+//attribute vec4 a_Color;
 
 //     Remember that we said we wanted our colors to vary across the surface of a triangle?
 //     Well, this is done by using a special variable type known as a varying.
@@ -25,11 +26,11 @@ attribute vec4 a_Color;
 //     a blended color. Near vertex 0, the blended color will be mostly red, and as
 //     the fragments get closer to vertex 1, the color will start to become green.
 
-varying vec4 v_Color;
+//varying vec4 v_Color;
 
 void main()
 {
-    v_Color = a_Color;
+//    v_Color = a_Color;
 
 //     It also means that our vertex array will no longer be interpreted as normalized device coordinates
 //     but will now be interpreted as existing in a virtual coordinate space,
@@ -47,5 +48,5 @@ void main()
 //     square will be equal to gl_PointSize. The larger gl_PointSize is, the larger the point
 //     drawn on the screen.
 
-    gl_PointSize = 10.0;
+//    gl_PointSize = 10.0;
 }
