@@ -60,6 +60,27 @@ public class ObjectBuilder
         return (numPoints + 1) * 2;
     }
 
+//    This is just a holder class so that we can return both the vertex data and the
+//    draw list in a single object.
+    static class GeneratedData
+    {
+
+        final float[] vertexData;
+        final List<DrawCommand> drawList;
+
+        GeneratedData(float[] vertexData, List<DrawCommand> drawList)
+        {
+            this.vertexData = vertexData;
+            this.drawList = drawList;
+        }
+    }
+
+    //     We’ll use this to return the generated data inside of a GeneratedData object.
+    private GeneratedData build()
+    {
+        return new GeneratedData(vertexData, drawList);
+    }
+
 //    A method to generate Puck:
 //    This method creates a new ObjectBuilder with the right array size to hold all of
 //    the data for the puck. It also creates a display list so that we can draw
@@ -204,12 +225,6 @@ public class ObjectBuilder
         });
     }
 
-//     We’ll use this to return the generated data inside of a GeneratedData object.
-    private GeneratedData build()
-    {
-        return new GeneratedData(vertexData, drawList);
-    }
-
 //    We’ll also need to tell OpenGL how to draw the top of the puck. Since a puck
 //    is built out of two primitives, a triangle fan for the top and a triangle strip for
 //    the side, we need a way to combine these draw commands together so that
@@ -218,20 +233,5 @@ public class ObjectBuilder
     interface DrawCommand
     {
         void draw();
-    }
-
-//    This is just a holder class so that we can return both the vertex data and the
-//    draw list in a single object.
-    static class GeneratedData
-    {
-
-        final float[] vertexData;
-        final List<DrawCommand> drawList;
-
-        GeneratedData(float[] vertexData, List<DrawCommand> drawList)
-        {
-            this.vertexData = vertexData;
-            this.drawList = drawList;
-        }
     }
 }
