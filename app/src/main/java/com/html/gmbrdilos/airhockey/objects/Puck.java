@@ -7,7 +7,8 @@ import com.html.gmbrdilos.airhockey.util.Geometry;
 
 import java.util.List;
 
-public class Puck {
+public class Puck
+{
 
     private static final int POSITION_COMPONENT_COUNT = 3;
 
@@ -17,7 +18,8 @@ public class Puck {
 
     private final List<ObjectBuilder.DrawCommand> drawList;
 
-    public Puck(float radius, float height, int numPointsAroundPuck) {
+    public Puck(float radius, float height, int numPointsAroundPuck)
+    {
 
 //        When a new Puck is created, it will generate the object data, store the vertices
 //        in a native buffer with vertexArray, and store the draw list in drawList.
@@ -37,7 +39,8 @@ public class Puck {
     }
 
 //     Binds the vertex data to the attributes defined by the shader program.
-    public void bindData(ColorShaderProgram colorProgram) {
+    public void bindData(ColorShaderProgram colorProgram)
+    {
         vertexArray.setVertexAttribPointer(
                 0,
                 colorProgram.getPositionAttributeLocation(),
@@ -45,8 +48,10 @@ public class Puck {
                 0);
     }
 
-    public void draw() {
-        for (ObjectBuilder.DrawCommand drawCommand : drawList) {
+    public void draw()
+    {
+        for (ObjectBuilder.DrawCommand drawCommand : drawList)
+        {
             drawCommand.draw();
         }
     }

@@ -21,7 +21,8 @@ import com.html.gmbrdilos.airhockey.util.Geometry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectBuilder {
+public class ObjectBuilder
+{
 
 //    A constant to represent how many floats we need for a vertex
     private static final int FLOATS_PER_VERTEX = 3;
@@ -35,37 +36,18 @@ public class ObjectBuilder {
 //    A variable to keep track of the position in the array for the next vertex
     private int offset = 0;
 
-    private ObjectBuilder(int sizeInVertices) {
+//    Our constructor initializes the array based on the required size in vertices.
+    private ObjectBuilder(int sizeInVertices)
+    {
         vertexData = new float[sizeInVertices * FLOATS_PER_VERTEX];
-    }
-
-//    We’ll also need to tell OpenGL how to draw the top of the puck. Since a puck
-//    is built out of two primitives, a triangle fan for the top and a triangle strip for
-//    the side, we need a way to combine these draw commands together so that
-//    later on we can just call puck.draw(). One way we can do this is by adding each
-//    draw command into a draw list.
-    static interface DrawCommand {
-        void draw();
-    }
-
-//    This is just a holder class so that we can return both the vertex data and the
-//    draw list in a single object.
-    static class GeneratedData {
-
-        final float[] vertexData;
-        final List<DrawCommand> drawList;
-
-        GeneratedData(float[] vertexData, List<DrawCommand> drawList) {
-            this.vertexData = vertexData;
-            this.drawList = drawList;
-        }
     }
 
 //    A method to calculate the size of a cylinder top in vertices:
 //    A cylinder top is a circle built out of a triangle fan; it has one vertex in the
 //    center, one vertex for each point around the circle, and the first vertex around
-//    the circle i0s repeated twice so that we can close the circle off.
-    private static int sizeOfCircleInVertices(int numPoints) {
+//    the circle is repeated twice so that we can close the circle off.
+    private static int sizeOfCircleInVertices(int numPoints)
+    {
         return 1 + (numPoints + 1);
     }
 
@@ -73,15 +55,17 @@ public class ObjectBuilder {
 //    A cylinder side is a rolled-up rectangle built out of a triangle strip, with two
 //    vertices for each point around the circle, and with the first two vertices
 //    repeated twice so that we can close off the tube.
-    private static int sizeOfOpenCylinderInVertices(int numPoints) {
+    private static int sizeOfOpenCylinderInVertices(int numPoints)
+    {
         return (numPoints + 1) * 2;
     }
 
-//    A method to generate Puck
+//    A method to generate Puck:
 //    This method creates a new ObjectBuilder with the right array size to hold all of
 //    the data for the puck. It also creates a display list so that we can draw
 //    the puck later on.
-    static GeneratedData createPuck(Geometry.Cylinder puck, int numPoints) {
+    static GeneratedData createPuck(Geometry.Cylinder puck, int numPoints)
+    {
 
 //        How many vertices we need to represent the puck.
 //        A puck is built out of one cylinder top (equivalent to a circle) and one cylinder side, so
@@ -92,14 +76,10 @@ public class ObjectBuilder {
         ObjectBuilder builder = new ObjectBuilder(size);
 
 //        We then calculate where the top of the puck should be:
-        Geometry.Circle puckTop = new Geometry.Circle(
-
-//                The puck is vertically centered at center.y, so it’s fine to place the cylinder side
-//                there. The cylinder top, however, needs to be placed at the top of the puck.
-//                To do that, we move it up by half of the puck’s overall height.
-                puck.center.translateY(puck.height / 2f),
-
-                puck.radius);
+//        The puck is vertically centered at center.y, so it’s fine to place the cylinder side
+//        there. The cylinder top, however, needs to be placed at the top of the puck.
+//        To do that, we move it up by half of the puck’s overall height.
+        Geometry.Circle puckTop = new Geometry.Circle(puck.center.translateY(puck.height / 2f), puck.radius);
 
 //        appendCircle() and appendOpenCylinder() to generate
 //        the top and sides of the puck. Each method adds its data to vertexData and
@@ -112,7 +92,8 @@ public class ObjectBuilder {
         return builder.build();
     }
 
-    static GeneratedData createMallet(Geometry.Point center, float radius, float height, int numPoints) {
+    static GeneratedData createMallet(Geometry.Point center, float radius, float height, int numPoints)
+    {
 
         int size = sizeOfCircleInVertices(numPoints) * 2 + sizeOfOpenCylinderInVertices(numPoints) * 2;
 
@@ -144,7 +125,8 @@ public class ObjectBuilder {
         return builder.build();
     }
 
-    private void appendCircle(Geometry.Circle circle, int numPoints) {
+    private void appendCircle(Geometry.Circle circle, int numPoints)
+    {
 
 //        Since we’re only using one array for the object, we need to tell OpenGL the
 //        right vertex offsets for each draw command. We calculate the offset and length
@@ -159,7 +141,8 @@ public class ObjectBuilder {
 
 //        Fan around center point. <= is used because we want to generate
 //        the point at the starting angle twice to complete the fan.
-        for (int i = 0; i <= numPoints; i++) {
+        for (int i = 0; i <= numPoints; i++)
+        {
 
             float angleInRadians = ((float) i / (float) numPoints) * ((float) Math.PI * 2f);
 
@@ -175,15 +158,18 @@ public class ObjectBuilder {
 //        With this code, we create a new inner class that calls glDrawArrays() and we add
 //        the inner class to our draw list. To draw the puck later, we just have to execute
 //        each draw() method in the list.
-        drawList.add(new DrawCommand() {
+        drawList.add(new DrawCommand()
+        {
             @Override
-            public void draw() {
+            public void draw()
+            {
                 GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, startVertex, numVertices);
             }
         });
     }
 
-    private void appendOpenCylinder(Geometry.Cylinder cylinder, int numPoints) {
+    private void appendOpenCylinder(Geometry.Cylinder cylinder, int numPoints)
+    {
 
         final int startVertex = offset / FLOATS_PER_VERTEX;
         final int numVertices = sizeOfOpenCylinderInVertices(numPoints);
@@ -191,7 +177,8 @@ public class ObjectBuilder {
         final float yStart = cylinder.center.y - (cylinder.height / 2f);
         final float yEnd = cylinder.center.y + (cylinder.height / 2f);
 
-        for (int i = 0; i <= numPoints; i++) {
+        for (int i = 0; i <= numPoints; i++)
+        {
 
             float angleInRadians = ((float) i / (float) numPoints) * ((float) Math.PI * 2f);
 
@@ -207,16 +194,44 @@ public class ObjectBuilder {
             vertexData[offset++] = zPosition;
         }
 
-        drawList.add(new DrawCommand() {
+        drawList.add(new DrawCommand()
+        {
             @Override
-            public void draw() {
+            public void draw()
+            {
                 GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, startVertex, numVertices);
             }
         });
     }
 
 //     We’ll use this to return the generated data inside of a GeneratedData object.
-    private GeneratedData build() {
+    private GeneratedData build()
+    {
         return new GeneratedData(vertexData, drawList);
+    }
+
+//    We’ll also need to tell OpenGL how to draw the top of the puck. Since a puck
+//    is built out of two primitives, a triangle fan for the top and a triangle strip for
+//    the side, we need a way to combine these draw commands together so that
+//    later on we can just call puck.draw(). One way we can do this is by adding each
+//    draw command into a draw list.
+    interface DrawCommand
+    {
+        void draw();
+    }
+
+//    This is just a holder class so that we can return both the vertex data and the
+//    draw list in a single object.
+    static class GeneratedData
+    {
+
+        final float[] vertexData;
+        final List<DrawCommand> drawList;
+
+        GeneratedData(float[] vertexData, List<DrawCommand> drawList)
+        {
+            this.vertexData = vertexData;
+            this.drawList = drawList;
+        }
     }
 }

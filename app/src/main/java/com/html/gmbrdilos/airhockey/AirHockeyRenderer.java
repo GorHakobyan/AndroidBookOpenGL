@@ -6,7 +6,6 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
 import com.html.gmbrdilos.airhockey.objects.Mallet;
-import com.html.gmbrdilos.airhockey.objects.ObjectBuilder;
 import com.html.gmbrdilos.airhockey.objects.Puck;
 import com.html.gmbrdilos.airhockey.objects.Table;
 import com.html.gmbrdilos.airhockey.programs.ColorShaderProgram;
@@ -17,7 +16,8 @@ import com.html.gmbrdilos.airhockey.util.TextureHelper;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class AirHockeyRenderer implements GLSurfaceView.Renderer {
+public class AirHockeyRenderer implements GLSurfaceView.Renderer
+{
 
     private final Context context;
 
@@ -42,12 +42,14 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 //        For 2nd texture (BLENDING EXERCISE)
 //    private int texture2;
 
-    public AirHockeyRenderer(Context context) {
+    public AirHockeyRenderer(Context context)
+    {
         this.context = context;
     }
 
     @Override
-    public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
+    public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig)
+    {
 //        initialize our new variables.
 //        We set the clear color to black, initialize our vertex arrays and shader programs,
 //        and load in our texture using the helper function
@@ -69,7 +71,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
     }
 
     @Override
-    public void onSurfaceChanged(GL10 gl10, int width, int height) {
+    public void onSurfaceChanged(GL10 gl10, int width, int height)
+    {
 //        Set the OpenGL viewport to fill the entire surface.
 //        gl10.glViewport(0, 0, width, height);
 //
@@ -192,7 +195,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
 
     @Override
-    public void onDrawFrame(GL10 gl10) {
+    public void onDrawFrame(GL10 gl10)
+    {
 //        Clear the rendering surface.
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
@@ -296,7 +300,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         puck.draw();
     }
 
-    private void positionTableInScene() {
+    private void positionTableInScene()
+    {
 //        The table is defined in terms of X & Y coordinates, so we rotate it
 //        90 degrees to lie flat on the XZ plane.
         Matrix.setIdentityM(modelMatrix, 0);
@@ -308,7 +313,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(modelViewProjectionMatrix, 0, viewProjectionMatrix, 0, modelMatrix, 0);
     }
 
-    private void positionObjectInScene(float x, float y, float z) {
+    private void positionObjectInScene(float x, float y, float z)
+    {
 
 //        The mallets and puck are already defined to lie flat on the x-z plane, so there’s
 //        no need for rotation. We translate them based on the parameters passed in

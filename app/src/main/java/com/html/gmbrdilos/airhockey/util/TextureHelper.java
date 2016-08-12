@@ -7,14 +7,16 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
 
-public class TextureHelper {
+public class TextureHelper
+{
 
     private static final String TAG = "TextureHelper";
 
 //    This method will take in an Android context and a resource ID and will return
 //    the ID of the loaded OpenGL texture.
 
-    public static int loadTexture(Context context, int resourceId) {
+    public static int loadTexture(Context context, int resourceId)
+    {
 
         final int[] textureObjectIds = new int[1];
         GLES20.glGenTextures(
@@ -24,8 +26,10 @@ public class TextureHelper {
         );
 
 
-        if (textureObjectIds[0] == 0) {
-            if (LoggerConfig.ON) {
+        if (textureObjectIds[0] == 0)
+        {
+            if (LoggerConfig.ON)
+            {
                 Log.w(TAG, "Could not generate a new OpenGL texture object.");
             }
             return 0;
@@ -49,8 +53,10 @@ public class TextureHelper {
 
         final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
 
-        if (bitmap == null) {
-            if (LoggerConfig.ON) {
+        if (bitmap == null)
+        {
+            if (LoggerConfig.ON)
+            {
                 Log.w(TAG, "Resource ID " + resourceId + " could not be decoded.");
             }
             GLES20.glDeleteTextures(1, textureObjectIds, 0);

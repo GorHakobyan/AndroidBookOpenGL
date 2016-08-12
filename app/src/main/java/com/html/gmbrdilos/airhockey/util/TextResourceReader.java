@@ -8,16 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TextResourceReader {
+public class TextResourceReader
+{
 
-    //A method to read in text from a resource
+//    A method to read in text from a resource
     public static String readTextFileFromResource(Context context, // The Android context is required in order to access the resources.
-                                                  int resourceId) {
+                                                  int resourceId)
+    {
 
 
         StringBuilder body = new StringBuilder();
 
-        try {
+        try
+        {
 
             InputStream inputStream = context.getResources().openRawResource(resourceId);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -25,19 +28,20 @@ public class TextResourceReader {
 
             String nextLine;
 
-            while ((nextLine = bufferedReader.readLine()) != null) {
+            while ((nextLine = bufferedReader.readLine()) != null)
+            {
 
                 body.append(nextLine);
                 body.append('\n');
 
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e)
+        {
 
             throw new RuntimeException("Could not open resource: " + resourceId, e);
 
-        }
-        catch (Resources.NotFoundException nfe) {
+        } catch (Resources.NotFoundException nfe)
+        {
 
             throw new RuntimeException("Resource not found: " + resourceId, nfe);
 

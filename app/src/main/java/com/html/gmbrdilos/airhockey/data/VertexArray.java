@@ -9,14 +9,16 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-public class VertexArray {
+public class VertexArray
+{
 
 //     Will be used to store our vertex array data
     private final FloatBuffer floatBuffer;
 
 //     The constructor takes in an array of Java floating-point
 //     data and writes it to the buffer.
-    public VertexArray(float[] vertexData) {
+    public VertexArray(float[] vertexData)
+    {
 
         floatBuffer = ByteBuffer
 //        We allocated a block of native memory
@@ -50,7 +52,8 @@ public class VertexArray {
 
 //    A generic method to associate an attribute in our shader with the data.
     public void setVertexAttribPointer(int dataOffset, int attributeLocation,
-                                       int componentCount, int stride) {
+                                       int componentCount, int stride)
+    {
 
         floatBuffer.position(dataOffset);
 

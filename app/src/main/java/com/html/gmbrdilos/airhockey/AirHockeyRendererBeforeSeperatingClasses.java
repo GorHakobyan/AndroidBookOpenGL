@@ -17,7 +17,8 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.Renderer{
+public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.Renderer
+{
 
 //    As we have 2D object, there is only x and y: 2 components per vertex
     private static final int POSITION_COMPONENT_COUNT = 2;
@@ -79,7 +80,8 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //    private static final String U_COLOR = "u_Color";
 //    private int uColorLocation;
 
-    public AirHockeyRendererBeforeSeperatingClasses(Context context) {
+    public AirHockeyRendererBeforeSeperatingClasses(Context context)
+    {
 
         this.context = context;
 
@@ -114,20 +116,20 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //                these w values over
 
 //                X, Y, R, G, B
-                0f, 0f,               1f, 1f, 1f,
-                -0.5f, -0.8f,         1.0f, 0.0f, 1.0f,
-                0.5f, -0.8f,          0.0f, 1.0f, 0.0f,
-                0.5f, 0.8f,           1.0f, 1.0f, 0.0f,
-                -0.5f, 0.8f,          0.0f, 0.0f, 1.0f,
-                -0.5f, -0.8f,         1.0f, 0.0f, 1.0f,
+                0f, 0f, 1f, 1f, 1f,
+                -0.5f, -0.8f, 1.0f, 0.0f, 1.0f,
+                0.5f, -0.8f, 0.0f, 1.0f, 0.0f,
+                0.5f, 0.8f, 1.0f, 1.0f, 0.0f,
+                -0.5f, 0.8f, 0.0f, 0.0f, 1.0f,
+                -0.5f, -0.8f, 1.0f, 0.0f, 1.0f,
 
 //                Line 1
-                -0.5f, 0f,            1f, 0f, 0f,
-                0.5f, 0f,             1f, 0f, 0f,
+                -0.5f, 0f, 1f, 0f, 0f,
+                0.5f, 0f, 1f, 0f, 0f,
 
 //                Mallets
-                0f, -0.4f,            0f, 0f, 1f,
-                0f, 0.4f,             1f, 0f, 0f
+                0f, -0.4f, 0f, 0f, 1f,
+                0f, 0.4f, 1f, 0f, 0f
 
         };
 
@@ -163,7 +165,8 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
     }
 
     @Override
-    public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
+    public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig)
+    {
         gl10.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 //        Read the shader code
@@ -178,7 +181,8 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 
         program = ShaderHelper.linkProgram(vertexShader, fragmentShader);
 
-        if (LoggerConfig.ON) {
+        if (LoggerConfig.ON)
+        {
             ShaderHelper.validateProgram(program);
         }
 
@@ -274,7 +278,8 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
     }
 
     @Override
-    public void onSurfaceChanged(GL10 gl10, int width, int height) {
+    public void onSurfaceChanged(GL10 gl10, int width, int height)
+    {
 //        Set the OpenGL viewport to fill the entire surface.
         gl10.glViewport(0, 0, width, height);
 
@@ -318,8 +323,6 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //        }
 
 
-
-
 //        This will create a perspective projection with a field of vision of 45 degrees.
 //        The frustum will begin at a z of -1 and will end at a z of -10.
 
@@ -341,7 +344,7 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 
 //        Whenever we multiply two matrices, we need a temporary area to store the
 //        result. If we try to write the result directly, the results are undefined!
-        final float[] tmp = new float [16];
+        final float[] tmp = new float[16];
 
 //        we call multiplyMM() to multiply the projection matrix and model matrix
 //        together into this temporary array.
@@ -354,7 +357,8 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
     }
 
     @Override
-    public void onDrawFrame(GL10 gl10) {
+    public void onDrawFrame(GL10 gl10)
+    {
 //        Clear the rendering surface.
         gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 

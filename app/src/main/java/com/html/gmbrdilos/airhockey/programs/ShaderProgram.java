@@ -6,7 +6,8 @@ import android.opengl.GLES20;
 import com.html.gmbrdilos.airhockey.util.ShaderHelper;
 import com.html.gmbrdilos.airhockey.util.TextResourceReader;
 
-public class ShaderProgram {
+public class ShaderProgram
+{
 
 //     Uniform constants
     protected static final String U_MATRIX = "u_Matrix";
@@ -23,7 +24,8 @@ public class ShaderProgram {
 
 //    In the constructor,we call the helper function that we’ve just defined, and we use it to build an
 //    OpenGL shader program with the specified shaders.
-    protected ShaderProgram(Context context, int vertexShaderResourceId, int fragmentShaderResourceId) {
+    protected ShaderProgram(Context context, int vertexShaderResourceId, int fragmentShaderResourceId)
+    {
 //     Compile the shaders and link the program.
         program = ShaderHelper.buildProgram(
                 TextResourceReader.readTextFileFromResource(context, vertexShaderResourceId),
@@ -31,7 +33,8 @@ public class ShaderProgram {
         );
     }
 
-    public void useProgram() {
+    public void useProgram()
+    {
 //      Set the current OpenGL shader program to this program.
         GLES20.glUseProgram(program);
     }

@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     /**
      * Hold a reference to our GLSurfaceView
@@ -18,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean rendererSet = false;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         glSurfaceView = new GLSurfaceView(this);
@@ -40,14 +42,16 @@ public class MainActivity extends AppCompatActivity {
                         || Build.MODEL.contains("Emulator")
                         || Build.MODEL.contains("Android SDK built for x86")));
 
-        if (supportsEs2) {
+        if (supportsEs2)
+        {
             // Request an OpenGL ES 2.0 compatible context.
             glSurfaceView.setEGLContextClientVersion(2);
 
             // Assign our renderer.
             glSurfaceView.setRenderer(new AirHockeyRenderer(this)); // An Activity is an Android context, so we pass in a reference to this.
             rendererSet = true;
-        } else {
+        } else
+        {
             /*
              * This is where you could create an OpenGL ES 1.x compatible
              * renderer if you wanted to support both ES 1 and ES 2. Since
@@ -70,18 +74,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
 
-        if (rendererSet) {
+        if (rendererSet)
+        {
             glSurfaceView.onPause();
         }
     }
+
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
 
-        if (rendererSet) {
+        if (rendererSet)
+        {
             glSurfaceView.onResume();
         }
     }

@@ -1,16 +1,18 @@
 package com.html.gmbrdilos.airhockey.util;
 
-public class MatrixHelper {
+public class MatrixHelper
+{
 
     public static void perspectiveM(
-                                    float[] m, // needs to have at least sixteen elements
-                                    float yFovInDegrees,
-                                    float aspect, // This should be set to the aspect ratio of the screen, which is equal to width/height.
-                                    float n, // This should be set to the distance to the near plane and must be
+            float[] m, // needs to have at least sixteen elements
+            float yFovInDegrees,
+            float aspect, // This should be set to the aspect ratio of the screen, which is equal to width/height.
+            float n, // This should be set to the distance to the near plane and must be
 //                                              positive. For example, if this is set to 1, the near plane will be located
 //                                              at a z of -1.
-                                    float f //  This should be set to the distance to the far plane and must be positive and greater than the distance to the near plane.
-    ) {
+            float f //  This should be set to the distance to the far plane and must be positive and greater than the distance to the near plane.
+    )
+    {
 
         final float angleInRadians = (float) (yFovInDegrees * Math.PI / 180.0);
 
@@ -24,8 +26,6 @@ public class MatrixHelper {
 //      |  0             a           0                       0                          |
 //      |  0             0          -((f + n)/(f - n))       -((2 * f * n) / (f - n))   |
 //      |  0             0           -1                      0                          |
-
-
 
 
 //        OpenGL stores matrix data in column-major order, which means that we write out data one

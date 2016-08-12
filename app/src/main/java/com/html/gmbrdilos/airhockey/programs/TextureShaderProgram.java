@@ -5,7 +5,8 @@ import android.opengl.GLES20;
 
 import com.html.gmbrdilos.airhockey.R;
 
-public class TextureShaderProgram extends ShaderProgram {
+public class TextureShaderProgram extends ShaderProgram
+{
 
 //     Uniform locations
     private final int uMatrixLocation;
@@ -19,7 +20,8 @@ public class TextureShaderProgram extends ShaderProgram {
     private final int aTextureCoordinatesLocation;
 
 //     Constructor to initialize the shader program
-    public TextureShaderProgram(Context context) {
+    public TextureShaderProgram(Context context)
+    {
 
 //        This constructor will call the superclass with our selected resources, and the
 //        superclass will build the shader program. We’ll then read in and save the
@@ -39,7 +41,8 @@ public class TextureShaderProgram extends ShaderProgram {
         aTextureCoordinatesLocation = GLES20.glGetAttribLocation(program, A_TEXTURE_COORDINATES);
     }
 
-    public void setUniforms(float[] matrix, int textureId) {
+    public void setUniforms(float[] matrix, int textureId)
+    {
 //        Pass the matrix into the shader program.
         GLES20.glUniformMatrix4fv(
 
@@ -83,11 +86,13 @@ public class TextureShaderProgram extends ShaderProgram {
         GLES20.glUniform1i(uTextureUnitLocation, 0);
     }
 
-    public int getPositionAttributeLocation() {
+    public int getPositionAttributeLocation()
+    {
         return aPositionLocation;
     }
 
-    public int getTextureCoordinatesAttributeLocation() {
+    public int getTextureCoordinatesAttributeLocation()
+    {
         return aTextureCoordinatesLocation;
     }
 
