@@ -75,7 +75,7 @@ public class ObjectBuilder
         }
     }
 
-    //     We’ll use this to return the generated data inside of a GeneratedData object.
+//     We’ll use this to return the generated data inside of a GeneratedData object.
     private GeneratedData build()
     {
         return new GeneratedData(vertexData, drawList);
@@ -85,6 +85,17 @@ public class ObjectBuilder
 //    This method creates a new ObjectBuilder with the right array size to hold all of
 //    the data for the puck. It also creates a display list so that we can draw
 //    the puck later on.
+//
+//    That’s everything we need for createPuck() to work. Let’s take a quick moment
+//    to review the flow:
+//        • First we call the static method createPuck() from outside the class. This
+//    method creates a new ObjectBuilder with the right array size to hold all of
+//    the data for the puck. It also creates a display list so that we can draw
+//    the puck later on.
+//        • Inside createPuck(), we call appendCircle() and appendOpenCylinder() to generate
+//    the top and sides of the puck. Each method adds its data to vertexData and
+//    a draw command to drawList.
+//        • Finally, we call build() to return the generated data.
     static GeneratedData createPuck(Geometry.Cylinder puck, int numPoints)
     {
 

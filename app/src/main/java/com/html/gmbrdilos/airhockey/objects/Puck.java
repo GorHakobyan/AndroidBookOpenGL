@@ -18,11 +18,11 @@ public class Puck
 
     private final List<ObjectBuilder.DrawCommand> drawList;
 
-    public Puck(float radius, float height, int numPointsAroundPuck)
-    {
 
 //        When a new Puck is created, it will generate the object data, store the vertices
 //        in a native buffer with vertexArray, and store the draw list in drawList.
+    public Puck(float radius, float height, int numPointsAroundPuck)
+    {
         ObjectBuilder.GeneratedData generatedData =
                 ObjectBuilder.createPuck(
                         new Geometry.Cylinder(
