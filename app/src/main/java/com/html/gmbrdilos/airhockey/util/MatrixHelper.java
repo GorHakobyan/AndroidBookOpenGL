@@ -4,13 +4,21 @@ public class MatrixHelper
 {
 
     public static void perspectiveM(
-            float[] m, // needs to have at least sixteen elements
+//        Needs to have at least sixteen elements
+            float[] m,
+
             float yFovInDegrees,
-            float aspect, // This should be set to the aspect ratio of the screen, which is equal to width/height.
-            float n, // This should be set to the distance to the near plane and must be
-//                                              positive. For example, if this is set to 1, the near plane will be located
-//                                              at a z of -1.
-            float f //  This should be set to the distance to the far plane and must be positive and greater than the distance to the near plane.
+
+//        This should be set to the aspect ratio of the screen, which is equal to width/height.
+            float aspect,
+
+//        This should be set to the distance to the near plane and must be
+//        positive. For example, if this is set to 1, the near plane will be located
+//        at a z of -1.
+            float n,
+
+//        This should be set to the distance to the far plane and must be positive and greater than the distance to the near plane.
+            float f
     )
     {
 
