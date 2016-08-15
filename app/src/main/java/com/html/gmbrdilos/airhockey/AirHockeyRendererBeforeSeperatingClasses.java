@@ -36,12 +36,15 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
     private int aPositionLocation;
 
     private static final String A_COLOR = "a_Color";
+    private int aColorLocation;
 
 //    RGB
     private static final int COLOR_COMPONENT_COUNT = 3;
 
 //    This holds the name of the new uniform that we defined in our vertex shader.
     private static final String U_MATRIX = "u_Matrix";
+//   We’ll also need an integer to hold the location of the matrix uniform:
+    private int uMatrixLocation;
 
 //    We’ll also need a floating point array to store the matrix:
 //    The destination array — this array’s length should be at least sixteen elements so
@@ -52,8 +55,7 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //    We’ll use this matrix to move the air hockey table into the distance.
     private final float[] modelMatrix = new float[16];
 
-//   We’ll also need an integer to hold the location of the matrix uniform:
-    private int uMatrixLocation;
+
 
 //    As we now have both a position and a color attribute in the same data array, OpenGL
 //    can no longer assume that the next position follows immediately after the
@@ -63,7 +65,7 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //    between each position so that it knows how far it has to skip.
 
     private static final int STRIDE = (POSITION_COMPONENT_COUNT + COLOR_COMPONENT_COUNT) * BYTES_PER_FLOAT;
-    private int aColorLocation;
+
 
     private final Context context;
 

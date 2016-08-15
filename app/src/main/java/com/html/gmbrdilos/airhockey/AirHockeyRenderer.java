@@ -10,6 +10,7 @@ import com.html.gmbrdilos.airhockey.objects.Puck;
 import com.html.gmbrdilos.airhockey.objects.Table;
 import com.html.gmbrdilos.airhockey.programs.ColorShaderProgram;
 import com.html.gmbrdilos.airhockey.programs.TextureShaderProgram;
+import com.html.gmbrdilos.airhockey.util.Geometry;
 import com.html.gmbrdilos.airhockey.util.MatrixHelper;
 import com.html.gmbrdilos.airhockey.util.TextureHelper;
 
@@ -42,6 +43,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 //    For 2nd texture (BLENDING EXERCISE)
 //    private int texture2;
 
+    private boolean malletPressed = false;
+    private Geometry.Point blueMalletPosition;
+
     public AirHockeyRenderer(Context context)
     {
         this.context = context;
@@ -59,6 +63,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
 //        Each object will be created with 32 points around the circle.
         mallet = new Mallet(0.08f, 0.15f, 32);
+        blueMalletPosition = new Geometry.Point(0f, mallet.height / 2f, 0.4f);
         puck = new Puck(0.06f, 0.02f, 32);
 
         textureProgram = new TextureShaderProgram(context);
@@ -327,5 +332,25 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
         Matrix.setIdentityM(modelMatrix, 0);
         Matrix.translateM(modelMatrix, 0, x, y, z);
         Matrix.multiplyMM(modelViewProjectionMatrix, 0, viewProjectionMatrix, 0, modelMatrix, 0);
+    }
+
+    public void handleTouchPress(float normalizedX, float normalizedY)
+    {
+        Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
+//        Now test if this ray intersects with the mallet by creating a
+//        bounding sphere that wraps the mallet.
+        Sphere malletBoundingSphere = new Sphere(new Geometry.Point(
+                blueMalletPosition.x,
+                blueMalletPosition.y,
+                blueMalletPosition.z),
+                mallet.height / 2f);
+//        If the ray intersects (if the user touched a part of the screen that
+//        intersects the mallet's bounding sphere), then set malletPressed = true.
+        malletPressed = Geometry.intersects(malletBoundingSphere, ray);
+    }
+
+    public void handleTouchDrag(float normalizedX, float normalizedY)
+    {
+
     }
 }

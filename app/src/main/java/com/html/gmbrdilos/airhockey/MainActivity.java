@@ -7,6 +7,8 @@ import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity
     private GLSurfaceView glSurfaceView;
     private boolean rendererSet = false;
 
+    final AirHockeyRenderer airHockeyRenderer = new AirHockeyRenderer(this);
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -25,14 +29,14 @@ public class MainActivity extends AppCompatActivity
 
         glSurfaceView = new GLSurfaceView(this);
 
-        // Check if the system supports OpenGL ES 2.0.
+//         Check if the system supports OpenGL ES 2.0.
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
-        // Even though the latest emulator supports OpenGL ES 2.0,
-        // it has a bug where it doesn't set the reqGlEsVersion so
-        // the above check doesn't work. The below will detect if the
-        // app is running on an emulator, and assume that it supports
-        // OpenGL ES 2.0.
+//         Even though the latest emulator supports OpenGL ES 2.0,
+//         it has a bug where it doesn't set the reqGlEsVersion so
+//         the above check doesn't work. The below will detect if the
+//         app is running on an emulator, and assume that it supports
+//         OpenGL ES 2.0.
         final boolean supportsEs2 =
                 configurationInfo.reqGlEsVersion >= 0x20000
                         || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1
@@ -48,9 +52,11 @@ public class MainActivity extends AppCompatActivity
             glSurfaceView.setEGLContextClientVersion(2);
 
             // Assign our renderer.
-            glSurfaceView.setRenderer(new AirHockeyRenderer(this)); // An Activity is an Android context, so we pass in a reference to this.
+            glSurfaceView.setRenderer(airHockeyRenderer); // An Activity is an Android context, so we pass in a reference to this.
             rendererSet = true;
-        } else
+        }
+
+        else
         {
             /*
              * This is where you could create an OpenGL ES 1.x compatible
@@ -69,6 +75,74 @@ public class MainActivity extends AppCompatActivity
                     Toast.LENGTH_LONG).show();
             return;
         }
+
+
+//        In Android, we can listen in on a view’s touch events by calling setOnTouchListener().
+//        When a user touches that view, we’ll receive a call to onTouch().
+        glSurfaceView.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+//                The first thing we do is check if there’s an event to handle. In Android, the
+//                touch events will be in the view’s coordinate space, so the upper left corner
+//                of the view will map to (0, 0), and the lower right corner will map to the view’s
+//                dimensions. For example, if our view was 480 pixels wide by 800 pixels tall,
+//                then the lower right corner would map to (480, 800).
+                if (event != null)
+                {
+//         Convert touch coordinates into normalized device
+//         coordinates, keeping in mind that Android's Y
+//         coordinates are inverted.
+//         Inverting the y-axis and scaling each coordinate into the range [-1, 1].
+                    final float normalizedX = (event.getX() / (float) v.getWidth()) * 2 - 1;
+                    final float normalizedY = -((event.getY() / (float) v.getHeight()) * 2 - 1);
+
+//                    We check to see if the event is either an initial press or a drag event, because
+//                    we’ll need to handle each case differently. An initial press corresponds to
+//                    MotionEvent.ACTION_DOWN, and a drag corresponds to MotionEvent.ACTION_MOVE.
+                    if (event.getAction() == MotionEvent.ACTION_DOWN)
+                    {
+//                        It’s important to keep in mind that Android’s UI runs in the main thread while
+//                        GLSurfaceView runs OpenGL in a separate thread, so we need to communicate
+//                        between the two using thread-safe techniques. We use queueEvent() to dispatch
+//                        calls to the OpenGL thread, calling airHockeyRenderer.handleTouchPress() for a press
+//                        and airHockeyRenderer.handleTouchDrag() for a drag.
+                        glSurfaceView.queueEvent(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                airHockeyRenderer.handleTouchPress(normalizedX, normalizedY);
+                            }
+                        });
+                    }
+
+                    else if (event.getAction() == MotionEvent.ACTION_MOVE)
+                    {
+                        glSurfaceView.queueEvent(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                airHockeyRenderer.handleTouchDrag(normalizedX, normalizedY);
+                            }
+                        });
+                    }
+
+                    return true;
+                }
+
+//                If the event was null, then we return false.
+                else
+                {
+                    return false;
+                }
+            }
+        });
+
+
+
 
         setContentView(glSurfaceView);
     }
