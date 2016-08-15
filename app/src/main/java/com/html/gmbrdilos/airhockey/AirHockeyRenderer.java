@@ -39,7 +39,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
     private int texture;
 
-//        For 2nd texture (BLENDING EXERCISE)
+//    For 2nd texture (BLENDING EXERCISE)
 //    private int texture2;
 
     public AirHockeyRenderer(Context context)
@@ -200,8 +200,12 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 //        Clear the rendering surface.
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
+//        For Rotation (ROTATION EXCERSISE)
+//        rotateM(matrix, offset, speed, xAxis, yAxis, zAxis)
+        Matrix.rotateM(viewMatrix, 0, 0.5f, 0f, 1f, 0f);
 //        This will cache the results of multiplying the projection and view matrices together into viewProjectionMatrix.
         Matrix.multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
+
 
 ////        Draw the table.
 ////        First we call textureProgram.useProgram() to tell OpenGL to use this program.
