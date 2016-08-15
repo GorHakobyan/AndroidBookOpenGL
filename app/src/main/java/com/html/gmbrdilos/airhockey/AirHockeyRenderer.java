@@ -202,7 +202,8 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
 //        For Rotation (ROTATION EXCERSISE)
 //        rotateM(matrix, offset, speed, xAxis, yAxis, zAxis)
-        Matrix.rotateM(viewMatrix, 0, 0.5f, 0f, 1f, 0f);
+//        Matrix.rotateM(viewMatrix, 0, 0.5f, 0f, 1f, 0f);
+
 //        This will cache the results of multiplying the projection and view matrices together into viewProjectionMatrix.
         Matrix.multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
