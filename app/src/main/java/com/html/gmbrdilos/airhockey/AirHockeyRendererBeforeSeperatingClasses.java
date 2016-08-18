@@ -388,6 +388,7 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 //        We want to start out by drawing a white table, so we set red, green, and blue
 //        to 1.0f for full brightness. The alpha value doesn’t matter, but we still need
 //        to specify it since a color has four components
+
 //        GLES20.glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
@@ -416,10 +417,12 @@ public class AirHockeyRendererBeforeSeperatingClasses implements GLSurfaceView.R
 
 //        Draw mallets as points
 //        Draw the first mallet blue.
+
 //        GLES20.glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 8, 1);
 
 //        Draw the second mallet red.
+
 //        GLES20.glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 9, 1);
 

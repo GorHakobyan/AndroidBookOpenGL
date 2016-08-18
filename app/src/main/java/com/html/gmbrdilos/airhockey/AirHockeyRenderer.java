@@ -1,6 +1,7 @@
 package com.html.gmbrdilos.airhockey;
 
 import android.content.Context;
+import android.media.Image;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -25,10 +26,11 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
     private final float[] projectionMatrix = new float[16];
     private final float[] modelMatrix = new float[16];
 
-//    We’ll store our view matrix in viewMatrix, and the other two matrices will be
+    //    We’ll store our view matrix in viewMatrix, and the other two matrices will be
 //    used to hold the results of matrix multiplications
     private final float[] viewMatrix = new float[16];
     private final float[] viewProjectionMatrix = new float[16];
+    private final float[] invertedViewProjectionMatrix = new float[16];
     private final float[] modelViewProjectionMatrix = new float[16];
 
     private Table table;
@@ -212,6 +214,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 //        This will cache the results of multiplying the projection and view matrices together into viewProjectionMatrix.
         Matrix.multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
+//        This call will create an inverted matrix that we’ll be able to use to convert the two-dimensional touch point into a pair of three-dimensional coordinates.
+        Matrix.invertM(invertedViewProjectionMatrix, 0, viewProjectionMatrix, 0);
+
 
 ////        Draw the table.
 ////        First we call textureProgram.useProgram() to tell OpenGL to use this program.
@@ -336,14 +341,16 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
     public void handleTouchPress(float normalizedX, float normalizedY)
     {
-        Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
+        Geometry.Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
+
 //        Now test if this ray intersects with the mallet by creating a
 //        bounding sphere that wraps the mallet.
-        Sphere malletBoundingSphere = new Sphere(new Geometry.Point(
+        Geometry.Sphere malletBoundingSphere = new Geometry.Sphere(new Geometry.Point(
                 blueMalletPosition.x,
                 blueMalletPosition.y,
                 blueMalletPosition.z),
                 mallet.height / 2f);
+
 //        If the ray intersects (if the user touched a part of the screen that
 //        intersects the mallet's bounding sphere), then set malletPressed = true.
         malletPressed = Geometry.intersects(malletBoundingSphere, ray);
@@ -351,6 +358,59 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
     public void handleTouchDrag(float normalizedX, float normalizedY)
     {
+        if (malletPressed)
+        {
+            Geometry.Ray ray = convertNormalized2DPointToRay(normalizedX, normalizedY);
 
+//        Define a plane representing our air hockey table.
+            Geometry.Plane plane = new Geometry.Plane(new Geometry.Point(0, 0, 0), new Geometry.Vector(0, 1, 0));
+
+//        Find out where the touched point intersects the plane
+//        representing our table. We'll move the mallet along this plane.
+            Geometry.Point touchedPoint = Geometry.intersectionPoint(ray, plane);
+            blueMalletPosition = new Geometry.Point(touchedPoint.x, mallet.height / 2f, touchedPoint.z);
+        }
+    }
+
+    private Geometry.Ray convertNormalized2DPointToRay(float normalizedX, float normalizedY)
+    {
+//         We'll convert these normalized device coordinates into world-space
+//         coordinates. We'll pick a point on the near and far planes, and draw a
+//         line between them. To do this transform, we need to first multiply by
+//         the inverse matrix, and then we need to undo the perspective divide.
+
+        final float[] nearPointNdc = {normalizedX, normalizedY, -1, 1};
+        final float[] farPointNdc = {normalizedX, normalizedY, 1, 1};
+        final float[] nearPointWorld = new float[4];
+        final float[] farPointWorld = new float[4];
+
+//        multiply each point with invertedViewProjectionMatrix to get a coordinate in world space
+        Matrix.multiplyMV(nearPointWorld, 0, invertedViewProjectionMatrix, 0, nearPointNdc, 0);
+        Matrix.multiplyMV(farPointWorld, 0, invertedViewProjectionMatrix, 0, farPointNdc, 0);
+
+//        There’s an interesting property
+//        of the inverted view projection matrix: after we multiply our vertices with the
+//        inverted view projection matrix, nearPointWorld and farPointWorld will actually
+//        contain an inverted w value. This is because normally the whole point of a
+//        projection matrix is to create different w values so that the perspective divide
+//        can do its magic; so if we use an inverted projection matrix, we’ll also get an
+//        inverted w. All we need to do is divide x, y, and z with these inverted w’s, and
+//        we’ll undo the perspective divide.
+
+        divideByW(nearPointWorld);
+        divideByW(farPointWorld);
+
+        Geometry.Point nearPointRay = new Geometry.Point(nearPointWorld[0], nearPointWorld[1], nearPointWorld[2]);
+
+        Geometry.Point farPointRay = new Geometry.Point(farPointWorld[0], farPointWorld[1], farPointWorld[2]);
+
+        return new Geometry.Ray(nearPointRay, Geometry.vectorBetween(nearPointRay, farPointRay));
+    }
+
+    private void divideByW(float[] vector)
+    {
+        vector[0] /= vector[3];
+        vector[1] /= vector[3];
+        vector[2] /= vector[3];
     }
 }
