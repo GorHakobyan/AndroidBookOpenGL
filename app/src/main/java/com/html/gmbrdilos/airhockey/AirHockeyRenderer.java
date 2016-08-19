@@ -41,11 +41,23 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
     private int texture;
 
+//    Table Bounds
+    private final float leftBound = -0.5f;
+    private final float rightBound = 0.5f;
+    private final float farBound = -0.8f;
+    private final float nearBound = 0.8f;
+
 //    For 2nd texture (BLENDING EXERCISE)
 //    private int texture2;
 
     private boolean malletPressed = false;
     private Geometry.Point blueMalletPosition;
+//    We need to keep track of how the mallet is moving over time
+    private Geometry.Point previousBlueMalletPosition;
+
+    private Geometry.Point puckPosition;
+//    We’ll use the vector to store both the speed and the direction of the puck
+    private Geometry.Vector puckVector;
 
     public AirHockeyRenderer(Context context)
     {
@@ -66,6 +78,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
         mallet = new Mallet(0.08f, 0.15f, 32);
         blueMalletPosition = new Geometry.Point(0f, mallet.height / 2f, 0.4f);
         puck = new Puck(0.06f, 0.02f, 32);
+
+        puckPosition = new Geometry.Point(0f, puck.height / 2f, 0f);
+        puckVector = new Geometry.Vector(0f, 0f, 0f);
 
         textureProgram = new TextureShaderProgram(context);
         colorProgram = new ColorShaderProgram(context);
@@ -368,7 +383,22 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 //        representing our table. We'll move the mallet along this plane.
             Geometry.Point touchedPoint = Geometry.intersectionPoint(ray, plane);
 
-            blueMalletPosition = new Geometry.Point(touchedPoint.x, mallet.height / 2f, touchedPoint.z);
+            previousBlueMalletPosition = blueMalletPosition;
+
+            blueMalletPosition = new Geometry.Point(
+
+                    clamp(
+                            touchedPoint.x,
+                            leftBound + mallet.radius,
+                            rightBound - mallet.radius),
+
+                    mallet.height / 2f,
+
+                    clamp(
+                            touchedPoint.z,
+                            0f + mallet.radius,
+                            nearBound - mallet.radius)
+            );
         }
     }
 
@@ -412,5 +442,10 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
         vector[0] /= vector[3];
         vector[1] /= vector[3];
         vector[2] /= vector[3];
+    }
+
+    private float clamp(float value, float min, float max)
+    {
+        return Math.min(max, Math.max(value, min));
     }
 }
