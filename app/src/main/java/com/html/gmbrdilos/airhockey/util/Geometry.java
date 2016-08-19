@@ -1,7 +1,5 @@
 package com.html.gmbrdilos.airhockey.util;
 
-import android.util.FloatMath;
-
 public class Geometry
 {
 
@@ -98,6 +96,16 @@ public class Geometry
                     (y * other.z) - (z * other.y),
                     (z * other.x) - (x * other.z),
                     (x * other.y) - (y * other.x));
+        }
+
+        public float dotProduct(Vector other)
+        {
+            return x * other.x + y * other.y + z * other.z;
+        }
+
+        public Vector scale(float f)
+        {
+            return new Vector(x * f, y * f, z * f);
         }
     }
 

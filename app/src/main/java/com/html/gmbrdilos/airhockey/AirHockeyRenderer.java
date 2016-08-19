@@ -1,7 +1,6 @@
 package com.html.gmbrdilos.airhockey;
 
 import android.content.Context;
-import android.media.Image;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -26,7 +25,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
     private final float[] projectionMatrix = new float[16];
     private final float[] modelMatrix = new float[16];
 
-    //    We’ll store our view matrix in viewMatrix, and the other two matrices will be
+//    We’ll store our view matrix in viewMatrix, and the other two matrices will be
 //    used to hold the results of matrix multiplications
     private final float[] viewMatrix = new float[16];
     private final float[] viewProjectionMatrix = new float[16];
@@ -299,7 +298,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
         mallet.draw();
 
 //        2nd Mallet
-        positionObjectInScene(0f, mallet.height / 2f, 0.4f);
+        positionObjectInScene(blueMalletPosition.x, blueMalletPosition.y, blueMalletPosition.z);
         colorProgram.setUniforms(modelViewProjectionMatrix, 0f, 0f, 1f);
 
 //        Note that we don't have to define the object data twice -- we just
@@ -368,6 +367,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 //        Find out where the touched point intersects the plane
 //        representing our table. We'll move the mallet along this plane.
             Geometry.Point touchedPoint = Geometry.intersectionPoint(ray, plane);
+
             blueMalletPosition = new Geometry.Point(touchedPoint.x, mallet.height / 2f, touchedPoint.z);
         }
     }
