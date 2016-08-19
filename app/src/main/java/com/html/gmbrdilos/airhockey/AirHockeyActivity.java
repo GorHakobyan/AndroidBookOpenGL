@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
+public class AirHockeyActivity extends AppCompatActivity
 {
 
     /**
