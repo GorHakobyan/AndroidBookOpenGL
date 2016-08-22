@@ -327,6 +327,43 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 
 //        Draw the puck.
         positionObjectInScene(puckPosition.x, puckPosition.y, puckPosition.z);
+
+//        We first check if the puck has gone either too far to the left or too far to the
+//        right. If it has, then we reverse its direction by inverting the x component of
+//        the vector.
+
+//        We then check if the puck has gone past the near or far edges of the table.
+//        In that case, we reverse its direction by inverting the z component of the
+//        vector. Don’t get confused by the z checks—the further away something is,
+//        the smaller the z, since negative z points into the distance.
+
+//        Finally, we bring the puck back within the confines of the table by clamping
+//        it to the table bounds. If we try things again, our puck should now bounce
+//        around inside the table instead of flying off the edge.
+        if (puckPosition.x < leftBound + puck.radius || puckPosition.x > rightBound - puck.radius)
+        {
+            puckVector = new Geometry.Vector(-puckVector.x, puckVector.y, puckVector.z);
+//            Friction
+            puckVector = puckVector.scale(0.9f);
+        }
+
+        if (puckPosition.z < farBound + puck.radius || puckPosition.z > nearBound - puck.radius)
+        {
+            puckVector = new Geometry.Vector(puckVector.x, puckVector.y, -puckVector.z);
+//            Friction
+            puckVector = puckVector.scale(0.9f);
+        }
+
+//        Clamp the puck position.
+        puckPosition = new Geometry.Point(
+                clamp(puckPosition.x, leftBound + puck.radius, rightBound - puck.radius),
+                puckPosition.y,
+                clamp(puckPosition.z, farBound + puck.radius, nearBound - puck.radius)
+        );
+
+//         Friction
+        puckVector = puckVector.scale(0.99f);
+
         colorProgram.setUniforms(modelViewProjectionMatrix, 0f, 0f, 0f);
         puck.bindData(colorProgram);
         puck.draw();
