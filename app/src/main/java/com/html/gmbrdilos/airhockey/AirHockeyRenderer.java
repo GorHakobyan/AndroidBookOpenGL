@@ -221,6 +221,9 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
 //        Clear the rendering surface.
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
+//        Translate the puck by its vector
+        puckPosition = puckPosition.translate(puckVector);
+
 //        For Rotation (ROTATION EXCERSISE)
 //        rotateM(matrix, offset, speed, xAxis, yAxis, zAxis)
 //        Matrix.rotateM(viewMatrix, 0, 0.5f, 0f, 1f, 0f);
@@ -323,7 +326,7 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
         mallet.draw();
 
 //        Draw the puck.
-        positionObjectInScene(0f, puck.height / 2f, 0f);
+        positionObjectInScene(puckPosition.x, puckPosition.y, puckPosition.z);
         colorProgram.setUniforms(modelViewProjectionMatrix, 0f, 0f, 0f);
         puck.bindData(colorProgram);
         puck.draw();
@@ -399,6 +402,15 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer
                             0f + mallet.radius,
                             nearBound - mallet.radius)
             );
+
+            float distance = Geometry.vectorBetween(blueMalletPosition, puckPosition).length();
+
+            if (distance < (puck.radius + mallet.radius))
+            {
+//        The mallet has struck the puck. Now send the puck flying
+//        based on the mallet velocity.
+                puckVector = Geometry.vectorBetween(previousBlueMalletPosition, blueMalletPosition);
+            }
         }
     }
 
